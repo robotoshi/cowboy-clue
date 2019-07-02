@@ -1,0 +1,110 @@
+<html>
+<head>
+	<title> How is this Possible? </title>
+	<style type="text/css">
+
+		body {
+			background-image: url(tarnation.jpg);
+		}
+
+		.box {
+			position: relative;
+			top: 15vh;
+			width: calc(100% - 55vw);
+			margin: auto;
+			background: rgb(100,100,100);
+			padding-top: 2vh;
+			padding-bottom: 2vh;
+			border-radius: 2vw;
+		}
+
+		form > * {
+			font-size: 2vw;
+			display: block;
+			position: relative;
+			width: auto;
+			margin: auto;
+			margin-bottom: 3vh;
+			margin-top: 3vh;
+		}
+
+		h3 {
+			
+			text-align: center;
+			font-family: Helvetica;
+			font-weight: bold;
+			color: white;
+		}
+
+	</style>
+
+	<script src="jquery-2.1.0.min.js"></script>
+	<script>
+		$(function() {
+		    // Get the form.
+		    var form = $('#ajax-contact');
+
+		    // Get the messages div.
+		    var formMessages = $('#form-messages');
+
+		    // TODO: The rest of the code will go here...
+		});
+
+		// Set up an event listener for the contact form.
+		$(form).submit(function(event) {
+		    // Stop the browser from submitting the form.
+		    event.preventDefault();
+
+		    // TODO
+		});
+
+		// Serialize the form data.
+		var formData = $(form).serialize();
+
+		// Submit the form using AJAX.
+		$.ajax({
+		    type: 'POST',
+		    url: $(form).attr('action'),
+		    data: formData
+		})
+
+		.done(function(response) {
+		    // Make sure that the formMessages div has the 'success' class.
+		    $(formMessages).removeClass('error');
+		    $(formMessages).addClass('success');
+
+		    // Set the message text.
+		    $(formMessages).text(response);
+
+		    // Clear the form.
+		    $('#name').val('');
+		    $('#email').val('');
+		    $('#message').val('');
+		})
+
+		.fail(function(data) {
+		    // Make sure that the formMessages div has the 'error' class.
+		    $(formMessages).removeClass('success');
+		    $(formMessages).addClass('error');
+
+		    // Set the message text.
+		    if (data.responseText !== '') {
+		        $(formMessages).text(data.responseText);
+		    } else {
+		        $(formMessages).text('Oops! An error occured and your message could not be sent.');
+		    }
+		});
+	</script>
+</head>
+
+<body>
+	<div class="box">
+		<form id="ajax-contact" name="riddle" method="post" action="riddle.php">
+			<h3>How is this possible?</h3>
+			<textarea type="text" name="answer" rows="3" cols="30" required></textarea>
+			<input type="submit" name="Submit">
+		</form>
+		<div id="form-messages"></div>
+	</div>
+</body>
+</html>
